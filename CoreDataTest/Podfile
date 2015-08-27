@@ -1,0 +1,10 @@
+# Uncomment this line to define a global platform for your project
+# platform :ios, '6.0'
+
+target 'CoreDataTest' do
+    pod 'fk-ios-lib-coredata', :path => "../lib/fk-ios-lib-coredata.podspec"
+end
+
+target 'CoreDataTestTests' do
+    pod 'fk-ios-lib-coredata', :path => "../lib/fk-ios-lib-coredata.podspec"
+end
