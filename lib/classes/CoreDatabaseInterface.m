@@ -27,7 +27,6 @@
 @interface CoreDatabaseInterface()
 {
     dispatch_queue_t serialQueue;
-    dispatch_queue_t concurrentQueue;
 }
 
 @end
@@ -46,7 +45,6 @@
         const char* key = [[NSString stringWithFormat:@"%@", storeURL] UTF8String];
         
         serialQueue = dispatch_queue_create(key, DISPATCH_QUEUE_SERIAL);
-        concurrentQueue = dispatch_queue_create(key, DISPATCH_QUEUE_CONCURRENT);
     }
     
     return self;
@@ -155,7 +153,7 @@
 
 - (dispatch_queue_t) getConcurrentQueue
 {
-    return concurrentQueue;
+    return dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 }
 
 @end
