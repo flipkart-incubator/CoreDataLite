@@ -11,10 +11,42 @@
 
 @interface CoreDatabaseInterface : NSObject
 
-- (id) initWithStoreName: (NSURL*) storeURL objectModel: (NSString*) objectModel;
+/**
+ @param storeURL instance of NSURL at which store is present
+ @param objectModel location of momd file against the store URL. This param does not expect "momd" as extension
+ 
+ @retun the newly initialized CoreDatabaseInterface object
+ */
+- (instancetype) initWithStoreURL: (NSURL*) storeURL objectModel: (NSString*) objectModel;
+
+/**
+ @return MOC working at main thread
+ */
 - (NSManagedObjectContext*) getMainManagedObjectContext;
+
+/**
+ @return MOC working on private thread
+ */
 - (NSManagedObjectContext*) getPrivateQueueManagedObjectContext;
+
+/**
+ @return Persistent Store Coordinator associated with main managedObjectContext
+ */
 - (NSPersistentStoreCoordinator*) getMainPersistentStoreCoordinator;
+
+/**
+ @return Persistent Store Coordinator associated with private queue ManagedObjectContext
+ */
 - (NSPersistentStoreCoordinator*) getPrivateQueuePersistentStoreCoordinator;
+
+/**
+ @return serial dispatch_queue_t
+ */
+- (dispatch_queue_t) getSerialQueue;
+
+/**
+ @return concurrent dispatch_queue_t
+ */
+- (dispatch_queue_t) getConcurrentQueue;
 
 @end

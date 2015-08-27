@@ -10,7 +10,7 @@
 
 @implementation CoreDataException
 
-- (id) initWithReason: (NSString*) reason
+- (instancetype) initWithReason: (NSString*) reason
 {
     self = [super initWithName:@"CoreDataDatabaseNotInitializedException" reason:reason userInfo:nil];
     return self;

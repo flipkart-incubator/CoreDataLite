@@ -10,6 +10,11 @@
 
 @interface CoreDataException : NSException
 
-- (id) initWithReason: (NSString*) reason;
+/**
+ @param reason String containing reson for crash
+ 
+ @return The newly-initialized CoreDataException
+ */
+- (instancetype) initWithReason: (NSString*) reason;
 
 @end

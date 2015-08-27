@@ -47,7 +47,7 @@
     return _keyToCoreDatabaseMapper;
 }
 
-- (void) setupCoreDataWithKey:(NSString*) key storeName: (NSString*) storeName objectModel:(NSString*) objectModel
+- (void) setupCoreDataWithKey:(NSString*) key storeURL:(NSURL *)storeURL objectModel:(NSString *)objectModel
 {
     if ([_keyToCoreDatabaseMapper objectForKey:key] != nil)
     {

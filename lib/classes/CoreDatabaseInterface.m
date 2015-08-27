@@ -24,9 +24,17 @@
 
 @end
 
+@interface CoreDatabaseInterface()
+{
+    dispatch_queue_t serialQueue;
+    dispatch_queue_t concurrentQueue;
+}
+
+@end
+
 @implementation CoreDatabaseInterface
 
-- (id) initWithStoreName: (NSURL*) storeURL objectModel: (NSString*) objectModel
+- (instancetype) initWithStoreURL: (NSURL*) storeURL objectModel: (NSString*) objectModel
 {
     self = [super init];
     
@@ -34,6 +42,11 @@
     {
         _storeURL = storeURL;
         _momdFile = objectModel;
+        
+        const char* key = [[NSString stringWithFormat:@"%@", storeURL] UTF8String];
+        
+        serialQueue = dispatch_queue_create(key, DISPATCH_QUEUE_SERIAL);
+        concurrentQueue = dispatch_queue_create(key, DISPATCH_QUEUE_CONCURRENT);
     }
     
     return self;
@@ -133,6 +146,16 @@
     NSURL *modelURL = [[NSBundle mainBundle] URLForResource:_momdFile withExtension:@"momd"];
     _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return _managedObjectModel;
+}
+
+- (dispatch_queue_t) getSerialQueue
+{
+    return serialQueue;
+}
+
+- (dispatch_queue_t) getConcurrentQueue
+{
+    return concurrentQueue;
 }
 
 @end
