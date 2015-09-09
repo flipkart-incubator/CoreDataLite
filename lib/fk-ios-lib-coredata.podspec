@@ -56,7 +56,7 @@ Pod::Spec.new do |s|
   s.author             = { "prabodhprakash" => "prabodh.prakash@flipkart.com" }
   # Or just: s.author    = "prabodhprakash"
   # s.authors            = { "prabodhprakash" => "prabodh.prakash@flipkart.com" }
-  # s.social_media_url   = "http://twitter.com/prabodhprakash"
+  s.social_media_url   = "http://twitter.com/prabodhprakash"
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
@@ -78,7 +78,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "http://github.com/Flipkart/fk-ios-lib-coredata.git", :branch => "master" }
+  s.source       = { :git => "https://github.com/Flipkart/fk-ios-lib-coredata.git", :branch => "master" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -89,7 +89,7 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = "classes", "classes/**/*.{h,m}"
+  s.source_files  = "classes", "lib/classes/**/*.{h,m}"
   s.exclude_files = "classes/Exclude"
 
   # s.public_header_files = "Classes/**/*.h"
