@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
 
   s.name         = "fk-ios-lib-coredata"
   s.version      = "0.0.1"
-  s.summary      = "A short description of fk-ios-lib-coredata."
+  s.summary      = "Coredata boiler plate code."
 
   s.description  = <<-DESC
                    A longer description of fk-ios-lib-coredata in Markdown format.
@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
                    * Finally, don't worry about the indent, CocoaPods strips it!
                    DESC
 
-  s.homepage     = "https://github.com/Flipkart/fk-ios-lib-coredata"
+  s.homepage     = "https://github.com/Flipkart/fk-ios-lib-coredata.git"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -40,7 +40,8 @@ Pod::Spec.new do |s|
   #
 
   #s.license      = "MIT (example)"
-  s.license      = { :type => "MIT", :file => "LICENSE.txt" }
+    s.license      = { :type => "MIT", :text => '@see README' }
+
 
 
   # ――― Author Metadata  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -78,7 +79,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/Flipkart/fk-ios-lib-coredata.git" :tag =>s.version.to_s }
+  s.source       = { :git => "https://github.com/Flipkart/#{s.name}.git", :tag =>s.version }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
