@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
                    * Finally, don't worry about the indent, CocoaPods strips it!
                    DESC
 
-  s.homepage     = "http://github.com/Flipkart/fk-ios-lib-coredata"
+  s.homepage     = "https://github.com/Flipkart/fk-ios-lib-coredata"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -65,7 +65,7 @@ Pod::Spec.new do |s|
   #
 
   # s.platform     = :ios
-  # s.platform     = :ios, "5.0"
+  s.platform     = :ios, "7.0"
 
   #  When using multiple platforms
   # s.ios.deployment_target = "5.0"
@@ -90,7 +90,7 @@ Pod::Spec.new do |s|
   #
 
   s.source_files  = "classes", "lib/classes/**/*.{h,m}"
-  s.exclude_files = "classes/Exclude"
+  s.exclude_files = "lib/classes/exclude"
 
   # s.public_header_files = "Classes/**/*.h"
 
