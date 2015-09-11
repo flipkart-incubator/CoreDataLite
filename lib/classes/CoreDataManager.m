@@ -12,7 +12,7 @@
 
 @interface CoreDataManager()
 
-@property (nonatomic, strong) NSDictionary* keyToCoreDatabaseMapper;
+@property (nonatomic, strong) NSMutableDictionary* keyToCoreDatabaseMapper;
 
 @end
 
@@ -25,6 +25,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedCoreDataManager = [[self alloc] init];
+        [sharedCoreDataManager keyToCoreDatabaseMapper];
     });
     
     return sharedCoreDataManager;
@@ -37,11 +38,11 @@
     return self;
 }
 
-- (NSDictionary *)keyToCoreDatabaseMapper
+- (NSMutableDictionary *)keyToCoreDatabaseMapper
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _keyToCoreDatabaseMapper = [NSDictionary new];
+        _keyToCoreDatabaseMapper = [NSMutableDictionary new];
     });
     
     return _keyToCoreDatabaseMapper;
