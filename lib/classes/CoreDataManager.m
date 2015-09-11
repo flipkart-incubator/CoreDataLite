@@ -47,7 +47,7 @@
     return _keyToCoreDatabaseMapper;
 }
 
-- (void) setupCoreDataWithKey:(NSString*) key storeURL:(NSURL *)storeURL objectModel:(NSString *)objectModel
+- (void) setupCoreDataWithKey:(NSString*) key storeKey:(NSString *)storeKey objectModelIdentifier:(NSString *)objectModelIdentifier
 {
     if ([_keyToCoreDatabaseMapper objectForKey:key] != nil)
     {
@@ -55,7 +55,7 @@
         @throw [[CoreDataException alloc] initWithReason:exceptionReason];
     }
     
-    CoreDatabaseInterface* coreDatabaseInterface = [[CoreDatabaseInterface alloc] init];
+    CoreDatabaseInterface* coreDatabaseInterface = [[CoreDatabaseInterface alloc] initWithStoreKey:storeKey objectModelIdentifier:objectModelIdentifier];
     
     [_keyToCoreDatabaseMapper setValue:coreDatabaseInterface forKey:key];
 }

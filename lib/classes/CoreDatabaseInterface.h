@@ -17,7 +17,7 @@
  
  @retun the newly initialized CoreDatabaseInterface object
  */
-- (instancetype) initWithStoreURL: (NSURL*) storeURL objectModel: (NSString*) objectModel;
+- (instancetype) initWithStoreKey: (NSString*) storeKey objectModelIdentifier: (NSString*) objectModelIdentifier;
 
 /**
  @return MOC working at main thread

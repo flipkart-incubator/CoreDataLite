@@ -18,8 +18,8 @@
 @property (nonatomic, strong) NSPersistentStoreCoordinator* privatePersistentStoreCoordinator;
 @property (nonatomic, strong) NSManagedObjectModel* managedObjectModel;
 
-@property (nonatomic, strong) NSURL* storeURL;
-@property (nonatomic, strong) NSString* momdFile;
+@property (nonatomic, strong) NSString* storeKey;
+@property (nonatomic, strong) NSString* identifier;
 @property (nonatomic, strong) NSURL* applicationDocumentDirectory;
 
 @end
@@ -33,18 +33,24 @@
 
 @implementation CoreDatabaseInterface
 
-- (instancetype) initWithStoreURL: (NSURL*) storeURL objectModel: (NSString*) objectModel
+- (instancetype) initWithStoreKey: (NSString*) storeKey objectModelIdentifier:(NSString *)objectModelIdentifier
 {
     self = [super init];
     
     if (self)
     {
-        _storeURL = storeURL;
-        _momdFile = objectModel;
+        _storeKey = storeKey;
+        _identifier = objectModelIdentifier;
         
-        const char* key = [[NSString stringWithFormat:@"%@", storeURL] UTF8String];
+        const char* key = [[NSString stringWithFormat:@"%@", storeKey] UTF8String];
         
         serialQueue = dispatch_queue_create(key, DISPATCH_QUEUE_SERIAL);
+        
+        [self managedObjectModel];
+        [self privatePersistentStoreCoordinator];
+        [self defaultPersistentStoreCoordinator];
+        [self managedObjectContext_MQ];
+        [self managedObjectContext_PQ];
     }
     
     return self;
@@ -76,7 +82,7 @@
     {
         _managedObjectContext_MQ = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
         
-         [_managedObjectContext_MQ setPersistentStoreCoordinator:_defaultPersistentStoreCoordinator];
+        [_managedObjectContext_MQ setPersistentStoreCoordinator:_defaultPersistentStoreCoordinator];
     }
     
     return _managedObjectContext_MQ;
@@ -94,6 +100,11 @@
     return _managedObjectContext_PQ;
 }
 
+- (NSURL *)applicationDocumentsDirectory
+{
+    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
 - (NSPersistentStoreCoordinator*) defaultPersistentStoreCoordinator
 {
     if (_defaultPersistentStoreCoordinator != nil)
@@ -102,12 +113,15 @@
     }
     
     NSError *error = nil;
+    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent: _storeKey];
+    _defaultPersistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
+    
     if (![_defaultPersistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType
                                                           configuration:nil
-                                                                    URL:_storeURL
+                                                                    URL:storeURL
                                                                 options:nil error:&error])
     {
-        NSString* exceptionReason = [NSString stringWithFormat:@"Error initilizing persistent store coordinator for storeURL %@", _storeURL];
+        NSString* exceptionReason = [NSString stringWithFormat:@"Error initilizing persistent store coordinator for storeURL %@", _storeKey];
         @throw [[CoreDataException alloc] initWithReason:exceptionReason];
     }
     
@@ -122,12 +136,15 @@
     }
     
     NSError *error = nil;
+    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent: _storeKey];
+    _privatePersistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
+    
     if (![_privatePersistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType
                                                           configuration:nil
-                                                                    URL:_storeURL
+                                                                    URL:storeURL
                                                                 options:nil error:&error])
     {
-        NSString* exceptionReason = [NSString stringWithFormat:@"Error initilizing persistent store coordinator for storeURL %@", _storeURL];
+        NSString* exceptionReason = [NSString stringWithFormat:@"Error initilizing persistent store coordinator for storeURL %@", _storeKey];
         @throw [[CoreDataException alloc] initWithReason:exceptionReason];
     }
     
@@ -141,7 +158,7 @@
         return _managedObjectModel;
     }
     
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:_momdFile withExtension:@"momd"];
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:_identifier withExtension:@"momd"];
     _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return _managedObjectModel;
 }

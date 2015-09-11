@@ -16,7 +16,7 @@
  @param storeURL NSURL value at which store is present
  @param objectModel location of momd file against the storeURL
  */
-- (void) setupCoreDataWithKey:(NSString*) key storeURL: (NSURL*) storeURL objectModel:(NSString*) objectModel;
+- (void) setupCoreDataWithKey:(NSString*) key storeKey: (NSString*) storeKey objectModelIdentifier:(NSString*) objectModelIdentifier;
 
 /**
  @param key String value key against which a MOC will be identified
