@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "CoreDatabaseInterface.h"
 
+/*!
+ This is a singleton class that can be used to initialize CoreDatabaseInterface. 
+ */
 @interface CoreDataManager : NSObject
 
 /**
