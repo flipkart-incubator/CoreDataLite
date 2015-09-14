@@ -5,9 +5,9 @@ source 'git@github.com:Flipkart/fk-private-cocoapods.git'
 source 'https://github.com/CocoaPods/Specs.git'
 
 target 'CoreDataTest' do
-    pod 'fk-ios-lib-coredata', :path => "../lib/fk-ios-lib-coredata.podspec"
+    pod 'fk-ios-lib-coredata', :path => "../CoreDataLite.podspec"
 end
 
 target 'CoreDataTestTests' do
-    pod 'fk-ios-lib-coredata', :path => "../lib/fk-ios-lib-coredata.podspec"
+    pod 'fk-ios-lib-coredata', :path => "../CoreDataLite.podspec"
 end

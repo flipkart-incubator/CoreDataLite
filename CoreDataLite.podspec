@@ -1,11 +1,11 @@
 Pod::Spec.new do |s|
-  s.name         = "fk-ios-lib-coredata"
+  s.name         = "CoreDataLite"
   s.version      = "0.0.3"
   s.summary      = "Coredata boiler plate code."
   s.description  = <<-DESC
                    Coredata boilerplate code.
                    DESC
-  s.homepage     = "https://github.com/Flipkart/fk-ios-lib-coredata.git"
+  s.homepage     = "https://github.com/Flipkart/#{s.name}.git"
   s.license      = 'MIT'
   s.author             = { "prabodhprakash" => "prabodh.prakash@flipkart.com" }
   s.social_media_url   = "http://twitter.com/prabodhprakash"
