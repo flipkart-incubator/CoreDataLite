@@ -6,7 +6,7 @@
 //
 //
 
-#import <CoreDataManager.h>
+#import "CoreDataManager.h"
 
 #ifndef Pods_CoreDataLite_h
 #define Pods_CoreDataLite_h
