@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "CoreDataLite"
-  s.version      = "0.0.3"
+  s.version      = "0.0.4"
   s.summary      = "Coredata boiler plate code."
   s.description  = <<-DESC
                    Coredata boilerplate code.
