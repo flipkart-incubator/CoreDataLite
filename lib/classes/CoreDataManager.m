@@ -48,17 +48,29 @@
     return _keyToCoreDatabaseMapper;
 }
 
-- (void) setupCoreDataWithKey:(NSString*) key storeURL:(NSURL *)storeURL objectModelIdentifier:(NSString *)objectModelIdentifier
+- (CoreDatabaseInterface*) setupCoreDataWithKey:(NSString*) key storeURL:(NSURL *)storeURL objectModelIdentifier:(NSString *)objectModelIdentifier
 {
+    CoreDatabaseInterface* coreDatabaseInterface = nil;
+    
     if ([_keyToCoreDatabaseMapper objectForKey:key] != nil)
     {
-        NSString* exceptionReason = [NSString stringWithFormat:@"Database for key : %@ already exist", key];
-        @throw [[CoreDataException alloc] initWithReason:exceptionReason];
+        coreDatabaseInterface = [_keyToCoreDatabaseMapper objectForKey:key];
+    }
+    else
+    {
+        @try
+        {
+            CoreDatabaseInterface* coreDatabaseInterface = [[CoreDatabaseInterface alloc] initWithStoreURL:storeURL objectModelIdentifier:objectModelIdentifier];
+            
+            [_keyToCoreDatabaseMapper setValue:coreDatabaseInterface forKey:key];
+        }
+        @catch (NSException *exception)
+        {
+            //debugging statement here ()
+        }
     }
     
-    CoreDatabaseInterface* coreDatabaseInterface = [[CoreDatabaseInterface alloc] initWithStoreURL:storeURL objectModelIdentifier:objectModelIdentifier];
-    
-    [_keyToCoreDatabaseMapper setValue:coreDatabaseInterface forKey:key];
+    return coreDatabaseInterface;
 }
 
 - (CoreDatabaseInterface*) getCoreDataInterfaceForKey: (NSString*) key
@@ -68,8 +80,7 @@
         return [_keyToCoreDatabaseMapper objectForKey:key];
     }
     
-    NSString* exceptionReason = [NSString stringWithFormat:@"Database for key : %@ not initialized", key];
-    @throw [[CoreDataException alloc] initWithReason:exceptionReason];
+    return nil;
 }
 
 @end
