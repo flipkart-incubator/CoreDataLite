@@ -20,7 +20,7 @@
  @param objectModel location of momd file against the storeURL
  @return CoreDatabaseInterface the coredatabase interface mapped against the key
  */
-- (CoreDatabaseInterface*) setupCoreDataWithKey:(NSString*) key storeURL: (NSURL*) storeURL objectModelIdentifier:(NSString*) objectModelIdentifier;
+- (CoreDatabaseInterface*) setupCoreDataWithKey:(NSString*) mocIdentifier storeURL: (NSURL*) storeURL objectModelIdentifier:( NSString*) objectModelIdentifier;
 
 /**
  @param key String value key against which a MOC will be identified

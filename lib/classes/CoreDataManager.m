@@ -8,6 +8,7 @@
 
 #import "CoreDataManager.h"
 #import "CoreDataException.h"
+#import <BaseLib.h>
 
 
 @interface CoreDataManager()
@@ -48,13 +49,20 @@
     return _keyToCoreDatabaseMapper;
 }
 
-- (CoreDatabaseInterface*) setupCoreDataWithKey:(NSString*) key storeURL:(NSURL *)storeURL objectModelIdentifier:(NSString *)objectModelIdentifier
+- (CoreDatabaseInterface*) setupCoreDataWithKey:(NSString*) mocIdentifier storeURL:(NSURL *)storeURL objectModelIdentifier:(NSString *)objectModelIdentifier
 {
+    if (!stringHasData(mocIdentifier))
+    {
+        return nil;
+    }
+    
     CoreDatabaseInterface* coreDatabaseInterface = nil;
     
-    if ([_keyToCoreDatabaseMapper objectForKey:key] != nil)
+    
+    
+    if ([_keyToCoreDatabaseMapper objectForKey:mocIdentifier] != nil)
     {
-        coreDatabaseInterface = [_keyToCoreDatabaseMapper objectForKey:key];
+        coreDatabaseInterface = [_keyToCoreDatabaseMapper objectForKey:mocIdentifier];
     }
     else
     {
@@ -62,7 +70,7 @@
         {
             CoreDatabaseInterface* coreDatabaseInterface = [[CoreDatabaseInterface alloc] initWithStoreURL:storeURL objectModelIdentifier:objectModelIdentifier];
             
-            [_keyToCoreDatabaseMapper setValue:coreDatabaseInterface forKey:key];
+            [_keyToCoreDatabaseMapper setValue:coreDatabaseInterface forKey:mocIdentifier];
         }
         @catch (NSException *exception)
         {
