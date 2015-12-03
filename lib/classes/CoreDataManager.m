@@ -68,12 +68,13 @@
     {
         @try
         {
-            CoreDatabaseInterface* coreDatabaseInterface = [[CoreDatabaseInterface alloc] initWithStoreURL:storeURL objectModelIdentifier:objectModelIdentifier];
+            coreDatabaseInterface = [[CoreDatabaseInterface alloc] initWithStoreURL:storeURL objectModelIdentifier:objectModelIdentifier];
             
             [_keyToCoreDatabaseMapper setValue:coreDatabaseInterface forKey:mocIdentifier];
         }
         @catch (NSException *exception)
         {
+            NSLog(@"%@", exception.description);
             //debugging statement here ()
         }
     }
