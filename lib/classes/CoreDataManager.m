@@ -8,8 +8,6 @@
 
 #import "CoreDataManager.h"
 #import "CoreDataException.h"
-#import <BaseLib.h>
-
 
 @interface CoreDataManager()
 
@@ -51,7 +49,7 @@
 
 - (CoreDatabaseInterface*) setupCoreDataWithKey:(NSString*) mocIdentifier storeURL:(NSURL *)storeURL objectModelIdentifier:(NSString *)objectModelIdentifier
 {
-    if (!stringHasData(mocIdentifier))
+    if (mocIdentifier == nil || [mocIdentifier length] <= 0)
     {
         return nil;
     }
