@@ -21,10 +21,12 @@
  @param storeURL instance of NSURL at which store is present
  
  @param objectModel location of momd file against the store URL. This param does not expect "momd" as extension
+ @param options     options to be used for setup. For more info refer 'Store Options' and 'Migration Options' at
+                    https://developer.apple.com/library/ios/documentation/Cocoa/Reference/CoreDataFramework/Classes/NSPersistentStoreCoordinator_Class/index.html#//apple_ref/doc/constant_group/Migration_Options
  
  @retun the newly initialized CoreDatabaseInterface object
  */
-- (instancetype) initWithStoreURL: (NSURL*) storeURL objectModelIdentifier: (NSString*) objectModelIdentifier;
+- (instancetype) initWithStoreURL: (NSURL*) storeURL objectModelIdentifier: (NSString*) objectModelIdentifier options:(NSDictionary *)options;
 
 /*!
  @return MOC working at main thread

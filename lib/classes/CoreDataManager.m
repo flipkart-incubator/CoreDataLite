@@ -47,7 +47,22 @@
     return _keyToCoreDatabaseMapper;
 }
 
-- (CoreDatabaseInterface*) setupCoreDataWithKey:(NSString*) mocIdentifier storeURL:(NSURL *)storeURL objectModelIdentifier:(NSString *)objectModelIdentifier
+
+- (CoreDatabaseInterface *)setupCoreDataWithKey:(NSString *)mocIdentifier
+                                       storeURL:(NSURL *)storeURL
+                          objectModelIdentifier:(NSString *)objectModelIdentifier
+{
+    return [self setupCoreDataWithKey:mocIdentifier
+                             storeURL:storeURL
+                objectModelIdentifier:objectModelIdentifier
+                              options:nil];
+}
+
+
+- (CoreDatabaseInterface*) setupCoreDataWithKey:(NSString*) mocIdentifier
+                                       storeURL:(NSURL *)storeURL
+                          objectModelIdentifier:(NSString *)objectModelIdentifier
+                                        options:(NSDictionary *)options
 {
     if (mocIdentifier == nil || [mocIdentifier length] <= 0)
     {
@@ -66,7 +81,9 @@
     {
         @try
         {
-            coreDatabaseInterface = [[CoreDatabaseInterface alloc] initWithStoreURL:storeURL objectModelIdentifier:objectModelIdentifier];
+            coreDatabaseInterface = [[CoreDatabaseInterface alloc] initWithStoreURL:storeURL
+                                                              objectModelIdentifier:objectModelIdentifier
+                                                                            options:options];
             
             [_keyToCoreDatabaseMapper setValue:coreDatabaseInterface forKey:mocIdentifier];
         }
@@ -79,6 +96,10 @@
     
     return coreDatabaseInterface;
 }
+
+
+
+
 
 - (CoreDatabaseInterface*) getCoreDataInterfaceForKey: (NSString*) key
 {
