@@ -22,6 +22,8 @@
 @property (nonatomic, strong) NSString* identifier;
 @property (nonatomic, strong) NSURL* applicationDocumentDirectory;
 
+@property (nonatomic, strong) NSURL* storeOptions;
+
 @end
 
 @interface CoreDatabaseInterface()
@@ -33,7 +35,9 @@
 
 @implementation CoreDatabaseInterface
 
-- (instancetype) initWithStoreURL: (NSURL*) storeURL objectModelIdentifier:(NSString *)objectModelIdentifier
+- (instancetype) initWithStoreURL:(NSURL *)storeURL
+            objectModelIdentifier:(NSString *)objectModelIdentifier
+                          options:(NSDictionary *)options
 {
     self = [super init];
     
@@ -41,6 +45,7 @@
     {
         _storeURL = storeURL;
         _identifier = objectModelIdentifier;
+        _storeOptions = options;
         
         const char* key = [[NSString stringWithFormat:@"%@", storeURL] UTF8String];
         
@@ -105,6 +110,26 @@
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
+
+- (NSPersistentStoreCoordinator*) createPersistentStoreCoordinatorWithOptions:(NSDictionary *)options
+{
+    NSError *error = nil;
+    NSPersistentStoreCoordinator *persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
+    
+    if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType
+                                                  configuration:nil
+                                                            URL:_storeURL
+                                                        options:options
+                                                          error:&error])
+    {
+        NSString* exceptionReason = [NSString stringWithFormat:@"Error initilizing persistent store coordinator for storeURL %@", _storeURL];
+        @throw [[CoreDataException alloc] initWithReason:exceptionReason];
+    }
+    
+    return persistentStoreCoordinator;
+}
+
+
 - (NSPersistentStoreCoordinator*) defaultPersistentStoreCoordinator
 {
     if (_defaultPersistentStoreCoordinator != nil)
@@ -112,17 +137,7 @@
         return _defaultPersistentStoreCoordinator;
     }
     
-    NSError *error = nil;
-    _defaultPersistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    
-    if (![_defaultPersistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType
-                                                          configuration:nil
-                                                                    URL:_storeURL
-                                                                options:nil error:&error])
-    {
-        NSString* exceptionReason = [NSString stringWithFormat:@"Error initilizing persistent store coordinator for storeURL %@", _storeURL];
-        @throw [[CoreDataException alloc] initWithReason:exceptionReason];
-    }
+    _defaultPersistentStoreCoordinator = [self createPersistentStoreCoordinatorWithOptions:self.storeOptions];
     
     return _defaultPersistentStoreCoordinator;
 }
@@ -135,16 +150,7 @@
     }
     
     NSError *error = nil;
-    _privatePersistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    
-    if (![_privatePersistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType
-                                                          configuration:nil
-                                                                    URL:_storeURL
-                                                                options:nil error:&error])
-    {
-        NSString* exceptionReason = [NSString stringWithFormat:@"Error initilizing persistent store coordinator for storeURL %@", _storeURL];
-        @throw [[CoreDataException alloc] initWithReason:exceptionReason];
-    }
+    _privatePersistentStoreCoordinator = [self createPersistentStoreCoordinatorWithOptions:self.storeOptions];
     
     return _privatePersistentStoreCoordinator;
 }
