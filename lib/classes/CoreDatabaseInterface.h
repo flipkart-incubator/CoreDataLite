@@ -29,11 +29,6 @@
 - (instancetype) initWithStoreURL: (NSURL*) storeURL objectModelIdentifier: (NSString*) objectModelIdentifier options:(NSDictionary *)options;
 
 /*!
- @return MOC working at main thread
- */
-- (NSManagedObjectContext*) getMainManagedObjectContext;
-
-/*!
  @return MOC working on private thread
  */
 - (NSManagedObjectContext*) getPrivateQueueManagedObjectContext;
