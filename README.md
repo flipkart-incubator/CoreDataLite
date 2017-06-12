@@ -29,7 +29,7 @@ CoreDataManager is a singleton class which holds instances of CoreDatabaseInterf
 
 CoreDatabaseInterface has methods to return back 
 
-1. NSManagedObjectContext on private queue and main queue.
+1. NSManagedObjectContext on private queue.
 2. NSPersistentStoreCoordinator 
 3. NSManagedObjectModel
 
