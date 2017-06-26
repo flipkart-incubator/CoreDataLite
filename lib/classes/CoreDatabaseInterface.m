@@ -54,16 +54,10 @@
         [self managedObjectModel];
         [self privatePersistentStoreCoordinator];
         [self defaultPersistentStoreCoordinator];
-        [self managedObjectContext_MQ];
         [self managedObjectContext_PQ];
     }
     
     return self;
-}
-
-- (NSManagedObjectContext*) getMainManagedObjectContext
-{
-    return [self managedObjectContext_MQ];
 }
 
 - (NSManagedObjectContext*) getPrivateQueueManagedObjectContext
@@ -79,18 +73,6 @@
 - (NSPersistentStoreCoordinator*) getPrivateQueuePersistentStoreCoordinator
 {
     return [self privatePersistentStoreCoordinator];
-}
-
-- (NSManagedObjectContext*) managedObjectContext_MQ
-{
-    if (!_managedObjectContext_MQ)
-    {
-        _managedObjectContext_MQ = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-        
-        [_managedObjectContext_MQ setPersistentStoreCoordinator:_defaultPersistentStoreCoordinator];
-    }
-    
-    return _managedObjectContext_MQ;
 }
 
 - (NSManagedObjectContext*) managedObjectContext_PQ
